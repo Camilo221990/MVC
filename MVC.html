@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title text-align:center; >PATRON MVC</title>
+    <!-- Incluimos Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    body{
+        background-color: #9ce9a8;
+    }
+</style>
+<body>
+    <div class="container mt-5">
+        <h1>PATRON MVC</h1>
+        <div class="row">
+            <!-- Vista (View) -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nameInput">Nombre:</label>
+                    <input type="text" class="form-control" id="nameInput">
+                </div>
+                <button id="updateButton" class="btn btn-primary">Actualizar Vista</button>
+            </div>
+            <!-- Controlador (Controller) -->
+            <div class="col-md-6">
+                <h3>Vista Actualizada:</h3>
+                <p id="outputText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modelo (Model)
+        class Model {
+            constructor() {
+                this.data = "";
+            }
+
+            setData(data) {
+                this.data = data;
+            }
+
+            getData() {
+                return this.data;
+            }
+        }
+
+        // Controlador (Controller)
+        class Controller {
+            constructor(model) {
+                this.model = model;
+            }
+
+            updateData(data) {
+                this.model.setData(data);
+            }
+
+            getViewData() {
+                return this.model.getData();
+            }
+        }
+
+        // Vista (View)
+        const model = new Model();
+        const controller = new Controller(model);
+
+        document.getElementById("updateButton").addEventListener("click", function() {
+            const nameInput = document.getElementById("nameInput");
+            const name = nameInput.value;
+            controller.updateData(name);
+
+            const outputText = document.getElementById("outputText");
+            outputText.textContent = `Nombre Actualizado: ${controller.getViewData()}`;
+        });
+    </script>
+</body>
+</html>
